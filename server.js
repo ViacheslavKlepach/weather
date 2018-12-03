@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const request = require('request');
 // const mongoose = require("mongoose");
 const axios = require('axios');
+const port = process.env.PORT || 3000;
 
 // mongoose.Promise = global.Promise;
 // mongoose.connect("mongodb://localhost:27017/node-demo", {useNewUrlParser: true});
