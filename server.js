@@ -18,7 +18,7 @@ app.get('/', function (req, res) {
 })
 
 app.post('/', function (req, res) {
-  let city = req.body.city;
+  let city = encodeURIComponent(req.body.city);
 
   let geocodeUrl = `https://geocoder.api.here.com/6.2/geocode.json?app_id=cxswUfcDo3QqNixB5VF6&app_code=XijfBpiQ6ve3QQYgBfq4Cw&searchtext=${city}`;
 
@@ -33,7 +33,7 @@ app.post('/', function (req, res) {
   }).then((response) => {
     let image = `https://image.maps.api.here.com/mia/1.6/mapview?app_id=cxswUfcDo3QqNixB5VF6&app_code=XijfBpiQ6ve3QQYgBfq4Cw&lat=${response.data.latitude}&lon=${response.data.longitude}`;
     let temperature = response.data.currently.temperature;
-    let weatherText = `It's ${temperature} degrees in ${city}!`;
+    let weatherText = `It's ${temperature} degrees in ${decodeURIComponent(city)}!`;
     res.render('index', {weather: weatherText, image: image, error: null});
   }).catch((e) => {
     if  (e.code === 'ENOTFOUND') {
