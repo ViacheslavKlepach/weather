@@ -48,7 +48,8 @@ app.post('/', function (req, res) {
     axios.get(geocodeUrl).then((response) => {
     let weather = response.data.Response.View[0];
     if (!response.data.Response.View[0]) {
-      throw new Error('Unable to find that address.');
+      // throw new Error('Unable to find that address.');
+      res.render('index', {weather: null, error: 'Unable to find that address.'});
     }
     let latitude = response.data.Response.View[0].Result[0].Location.DisplayPosition.Latitude;
     let longitude = response.data.Response.View[0].Result[0].Location.DisplayPosition.Longitude;
@@ -63,9 +64,11 @@ app.post('/', function (req, res) {
     // console.log(`It's currently ${temperature} degrees in ${argv.address}.`);
   }).catch((e) => {
     if  (e.code === 'ENOTFOUND') {
-      console.log('Unable to connect to API service.')
+      res.render('index', {weather: null, error: 'Unable to connect to API service.'});
+      // console.log('Unable to connect to API service.')
     } else {
-      console.log(e.message);
+      res.render('index', {weather: null, error: e.message});
+      // console.log(e.message);
     }
   });
 });
